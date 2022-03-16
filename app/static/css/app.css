@@ -1,3 +1,60 @@
 body {
     padding-top: 5rem;
 }
+
+
+
+:root{
+    --bg_primary:#15b8a7;
+    --main_bg:#f3f4f6;
+}
+
+.main_bg{
+    background-color:var(--main_bg);
+
+}
+
+.bg{
+    background-color:var(--bg_primary);
+}
+
+#Outline{
+    color:#fff;
+}
+
+.center{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btn_fix{
+    position: relative;
+    margin: 1em 0;
+}
+
+.section_inputs{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr  1fr;
+    margin: 2em 0;
+}
+
+.field_divs{
+    margin:0.5em 0;
+}
+
+.field_divs p{
+    font-weight:600;
+}
+
+.full_ww{
+    min-width: 100%;
+}
+
+.container_create{
+    max-width: 35em;
+    background-color: #ffffff;
+    padding: 1em;
+}
+

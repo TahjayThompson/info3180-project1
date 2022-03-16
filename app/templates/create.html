@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="container_create">
+<h1 class="display-5 fw-bold">Add New Property</h1>
+<form action="{{ url_for('create', next=request.args.get('next')) }}" method="post">
+    {{ form.csrf_token }} 
+    <div class="field_divs ">
+        <p>{{ form.title.label }}</p>
+        {{ form.title(class_="full_ww") }}
+    </div>
+    <!-- max width this -->
+    <div class="field_divs " >
+        <p>{{ form.description.label }}</p>
+        {{ form.description(class_="full_ww") }}
+    </div>
+    <!-- Add divider -->
+    <section class="section_inputs">
+        <div class="field_divs">
+            <p>{{ form.bedrooms.label }}</p>
+            {{ form.bedrooms }}
+        </div>
+        <div class="field_divs">
+            <p>{{ form.bathrooms.label }}</p>
+            {{ form.bathrooms }}
+        </div>
+        <div class="field_divs">
+            <p>{{ form.price.label }}</p>
+            {{ form.price }}
+        </div>
+        <div class="field_divs">
+            <p>{{ form.pro_type.label }}</p>
+            {{ form.pro_type }}
+        </div>
+    
+    </section>
+   
+    <!-- end divider -->
+    <div class="field_divs">
+        <p>{{ form.location.label }}</p>
+        {{ form.location }}
+    </div>
+    <div class="field_divs">
+        <p>{{ form.photo.label }}</p>
+        {{ form.photo }}
+    </div>
+  
+  
+<button type="submit" class="btn btn_fix btn-primary")}}> Add Property</button>
+</form>
+</div>
+{% endblock %}
