@@ -3,7 +3,7 @@
 {% block main %}
 <div class="container_create">
 <h1 class="display-5 fw-bold">Add New Property</h1>
-<form action="{{ url_for('create', next=request.args.get('next')) }}" method="post">
+<form action="{{ url_for('create', next=request.args.get('next')) }}" enctype="multipart/form-data" method="post">
     {{ form.csrf_token }} 
     <div class="field_divs ">
         <p>{{ form.title.label }}</p>
@@ -46,7 +46,7 @@
     </div>
   
   
-<button type="submit" class="btn btn_fix btn-primary")}}> Add Property</button>
+<input type="submit" value=" Add Property" class="btn btn_fix btn-primary">
 </form>
 </div>
 {% endblock %}

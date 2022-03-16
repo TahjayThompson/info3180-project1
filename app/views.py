@@ -5,9 +5,14 @@ Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
 This file creates your application.
 """
 
+from curses import flash
+import os
 from app import app
 from flask import render_template, request, redirect, url_for
 from app.forms import CreateForm
+from .models import Property
+from werkzeug.utils import secure_filename
+from . import db
 
 ###
 # Routing for your application.
@@ -26,14 +31,41 @@ def about():
 
 @app.route('/properties')
 def properties():
-    return render_template('properties.html')
+    # properties = Property.query.all()
+    return render_template('properties.html',)
+
+
+
 
 @app.route('/properties/create/', methods=['POST', 'GET'])
 def create():
-    form_create = CreateForm()
-    # if request.method == 'POST' and form_create.validate():
-        # return r
-    return render_template('create.html',form = form_create)
+    form = CreateForm()
+    if  request.method == 'POST':
+        f = form.photo.data
+        title = form.title.data
+        price = form.price.data
+        bedrooms = form.bedrooms.data
+        bathrooms = form.bathrooms.data
+        location = form.location.data
+        pro_type = form.pro_type.data
+        description = form.description.data
+
+        property = CreateForm(f.filename,title,bedrooms,bathrooms,location,price,pro_type,description) 
+        db.session.add(property) 
+        db.session.commit()
+        if f.filename == '':
+            flash('No selected file')
+        
+        # Get file data and save to your uploads folder
+        filename = f.filename
+        print(filename)
+        path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
+        f.save(path)
+                
+        return redirect(url_for('home'))
+    return render_template('create.html',form=form)
+
+
 
 @app.route('/properties/<propertyid>')
 def property_id():

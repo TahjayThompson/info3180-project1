@@ -1,7 +1,7 @@
 from . import db
 
 class  Property(db.Model):
-    id = db.Column(db.Integer, primary_key=True, unique=True)
+    id = db.Column('id',db.Integer, primary_key=True)
     title = db.Column(db.String(255))
     photo = db.Column(db.String(255))
     bedrooms = db.Column(db.String(80))

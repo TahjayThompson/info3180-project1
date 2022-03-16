@@ -6,10 +6,7 @@ from wtforms import StringField,SelectField,TextAreaField
 from wtforms.validators import DataRequired
 
 class CreateForm(FlaskForm):
-    photo = FileField('image', validators=[
-    FileRequired(),
-    FileAllowed(['jpg', 'png'], 'Images only!')
-    ])
+    photo = FileField('image', validators=[FileRequired(),FileAllowed(['jpg', 'png'], 'Images only!')])
     title = StringField(' Property Title',validators=[DataRequired()])
     bedrooms = StringField('No. Bedrooms',validators=[DataRequired()])
     bathrooms = StringField('No. Bathrooms',validators=[DataRequired()])
