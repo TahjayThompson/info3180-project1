@@ -14,6 +14,11 @@ from werkzeug.utils import secure_filename
 from . import db
 
 
+
+@app.route("/uploads/<filename>")
+def get_image(filename):
+    return send_from_directory(os.path.join(os.getcwd(),app.config['UPLOAD_FOLDER']), filename)
+
 ###
 # Routing for your application.
 ###
@@ -28,6 +33,7 @@ def home():
 def about():
     """Render the website's about page."""
     return render_template('about.html', name="Mary Jane")
+
 
 def getprop():
     prop=Property.query.all()
@@ -93,24 +99,6 @@ def viewproperty(propertyid):
     pr = Property.query.get(propertyid) 
     return render_template('property.html', pr=pr)
 
-
-
-@app.route("/properties/<filename>")
-def get_image(filename):
-    return send_from_directory(os.path.join(os.getcwd(),app.config['UPLOAD_FOLDER']), filename)
-
-
-def get_uploaded_images():
-    rootdir=os.getcwd()
-    path=rootdir+ '/uploads' 
-    file_list = [] 
-
-    for subdir, dirs, files in os.walk(path):
-        for name in files:
-            if name.endswith(('.png','.PNG', '.jpg','.JPG', '.jpeg','JPEG')):
-                file_list.append(name)
-
-    return file_list
 
 
 

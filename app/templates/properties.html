@@ -12,7 +12,8 @@
     {% for p in prop %}
     
         <div > 
-            <li><img  src="{{ url_for('get_image', filename=p['photo']) }}"/></li>
+            <li><img  src="{{ url_for('get_image', filename=p['photo']) }}" height="300" width="300"/></li>
+            
             <li>{{p['title']}}</li>
             <li>{{p['location']}}</li>
             <li>{{p['price']}}</li>
