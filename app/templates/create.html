@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
 {% block main %}
+{% include 'flash_messages.html' %}
 <div class="container_create">
 <h1 class="display-5 fw-bold">Add New Property</h1>
-<form action="{{ url_for('create', next=request.args.get('next')) }}" enctype="multipart/form-data" method="post">
+<form action="{{ url_for('create', next=request.args.get('next')) }}" method="post"  enctype="multipart/form-data">
     {{ form.csrf_token }} 
     <div class="field_divs ">
         <p>{{ form.title.label }}</p>

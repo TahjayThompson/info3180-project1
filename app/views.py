@@ -5,14 +5,14 @@ Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
 This file creates your application.
 """
 
-from curses import flash
 import os
 from app import app
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, send_from_directory, url_for,flash
 from app.forms import CreateForm
 from .models import Property
 from werkzeug.utils import secure_filename
 from . import db
+
 
 ###
 # Routing for your application.
@@ -29,47 +29,88 @@ def about():
     """Render the website's about page."""
     return render_template('about.html', name="Mary Jane")
 
-@app.route('/properties')
-def properties():
-    # properties = Property.query.all()
-    return render_template('properties.html',)
-
-
-
+def getprop():
+    prop=Property.query.all()
+    results=[{
+        "photo":p.photo,
+        "title":p.title,
+        "location":p.location,
+        "price":p.price,
+        "id":p.idv,
+        "bedroom":p.bedrooms,
+        "bathroom":p.bathrooms,
+        "propertytype":p.pro_type,
+        "desc":p.description
+        
+        
+    } for p in prop]
+    return results
 
 @app.route('/properties/create/', methods=['POST', 'GET'])
 def create():
     form = CreateForm()
-    if  request.method == 'POST':
-        f = form.photo.data
-        title = form.title.data
-        price = form.price.data
-        bedrooms = form.bedrooms.data
-        bathrooms = form.bathrooms.data
-        location = form.location.data
-        pro_type = form.pro_type.data
-        description = form.description.data
-
-        property = CreateForm(f.filename,title,bedrooms,bathrooms,location,price,pro_type,description) 
-        db.session.add(property) 
+    title = form.title.data
+    bedrooms = form.bedrooms.data
+    bathrooms = form.bathrooms.data
+    location = form.location.data
+    price = form.price.data
+    pro_type = form.pro_type.data
+    description = form.pro_type.data
+       
+    if request.method == 'POST':
+        file_obj = request.files['photo']
+        path = os.path.join('./uploads',file_obj.filename)
+        file_obj.save(path)
+        new = Property(file_obj.filename,title,bedrooms,bathrooms,location,price,pro_type,description)
+        db.session.add(new)
         db.session.commit()
-        if f.filename == '':
-            flash('No selected file')
-        
-        # Get file data and save to your uploads folder
-        filename = f.filename
-        print(filename)
-        path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
-        f.save(path)
-                
-        return redirect(url_for('home'))
+        flash('Property was successfully added','success')
+        flash_errors(form)
+        return redirect(url_for('properties'))
     return render_template('create.html',form=form)
 
 
 
-@app.route('/properties/<propertyid>')
-def property_id():
-    return render_template('property.html')
+# @app.route('/properties')
+# def properties():
+#     properties = db.session.query(Property).all()   
+#     return render_template('properties.html',properties=properties)
+
+
+@app.route('/properties')
+def properties():
+    prop=getprop()    
+    return render_template('properties.html',prop=prop )
+
+
+
+# @app.route('/properties/<propertyid>')
+# def property_id(propertyid):
+#     property = Property.query.get(property_id) 
+#     return render_template('property.html',property=property)
+@app.route('/property/<propertyid>')
+def viewproperty(propertyid):
+    pr = Property.query.get(propertyid) 
+    return render_template('property.html', pr=pr)
+
+
+
+@app.route("/properties/<filename>")
+def get_image(filename):
+    return send_from_directory(os.path.join(os.getcwd(),app.config['UPLOAD_FOLDER']), filename)
+
+
+def get_uploaded_images():
+    rootdir=os.getcwd()
+    path=rootdir+ '/uploads' 
+    file_list = [] 
+
+    for subdir, dirs, files in os.walk(path):
+        for name in files:
+            if name.endswith(('.png','.PNG', '.jpg','.JPG', '.jpeg','JPEG')):
+                file_list.append(name)
+
+    return file_list
 
 
 

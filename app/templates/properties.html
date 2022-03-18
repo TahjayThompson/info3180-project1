@@ -1,5 +1,27 @@
-{% extends "base.html" %}
+
+
+
+{% extends 'base.html' %}
 
 {% block main %}
-<h1 class="display-5 fw-bold">properties</h1>
+<h1 >Properties</h1>
+
+{% include 'flash_messages.html' %}
+
+<ul>
+    {% for p in prop %}
+    
+        <div > 
+            <li><img  src="{{ url_for('get_image', filename=p['photo']) }}"/></li>
+            <li>{{p['title']}}</li>
+            <li>{{p['location']}}</li>
+            <li>{{p['price']}}</li>
+            <li><a href="{{url_for('viewproperty', propertyid=p['id'])}}">View Property</a></li>
+        </div>
+    
+    
+    {% endfor %}   
+
+</ul>
+
 {% endblock %}

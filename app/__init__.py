@@ -5,7 +5,7 @@ from .config import Config
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Som3$ec5etK*y'  # Ideally you'd want this to be a much longer and more random string
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://tahjay:password123@localhost/Property'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password123@localhost/property'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # This is just here to suppress a warning from SQLAlchemy as it will soon be removed
 
 # We can also import our config from an object in a separate file.
@@ -14,6 +14,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # This is just here to supp
 app.config.from_object(Config)
 
 db = SQLAlchemy(app)
+from app import views, models
 migrate = Migrate(app, db)
 
-from app import views,models

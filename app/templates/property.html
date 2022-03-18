@@ -1,5 +1,23 @@
-{% extends "base.html" %}
-
+{% extends 'base.html' %}
 {% block main %}
-<h1 class="display-5 fw-bold">property</h1>
+{% include 'flash_messages.html' %}
+
+<ul>              
+
+            <div > 
+                <li><img  src="{{ url_for('get_image', filename=pr.photo) }}"/></li>
+                <li><h1>{{pr.title}}</h1></li>
+                <li>{{pr.price}}</li>
+                <li>{{pr.pro_type}}</li>
+                <li>{{pr.description}}</li>
+                <li>{{pr.bedrooms}} Bedrooms</li>
+                <li>{{pr.bathrooms}} Bathrooms</li>
+                <li>{{pr.location}}</li>
+
+                <button>Email Realtor</button>
+            </div>
+   
+
+</ul>
+
 {% endblock %}
