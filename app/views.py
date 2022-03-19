@@ -61,7 +61,7 @@ def create():
     location = form.location.data
     price = form.price.data
     pro_type = form.pro_type.data
-    description = form.pro_type.data
+    description = form.description.data
        
     if request.method == 'POST':
         file_obj = request.files['photo']

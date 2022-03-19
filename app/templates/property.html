@@ -2,22 +2,41 @@
 {% block main %}
 {% include 'flash_messages.html' %}
 
-<ul>              
+<div class="pro_grid">              
+    <img  src="{{ url_for('get_image', filename=pr.photo) }}" height="300" width="300"/>
 
-            <div > 
-                <li><img  src="{{ url_for('get_image', filename=pr.photo) }}" height="300" width="300"/></li>
-                <li><h1>{{pr.title}}</h1></li>
-                <li>{{pr.price}}</li>
-                <li>{{pr.pro_type}}</li>
-                <li>{{pr.description}}</li>
-                <li>{{pr.bedrooms}} Bedrooms</li>
-                <li>{{pr.bathrooms}} Bathrooms</li>
-                <li>{{pr.location}}</li>
+            <div class="con_t"> 
+                <h1>{{pr.title}}</h1>
+            
+                <div class="hori">
+                    <span class="money">
+                        {{pr.price}}
+                    </span>
+                    <span class="type">
+                        {{pr.pro_type}}
+
+                    </span>
+                </div>
+                <span>
+                    {{pr.description}}
+
+                </span>
+                <div class="hori">
+                  <span class="sp">   
+                      {{pr.bedrooms}} bedrooms
+                  </span>
+                <span>
+                    {{pr.bathrooms}} bathrooms
+                </span>
+                </div>
+                <span>
+                    {{pr.location}}
+                </span>
 
                 <button>Email Realtor</button>
             </div>
    
 
-</ul>
+</div >
 
 {% endblock %}
